@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name = 'CustomPickerDialog-Swift'
-    s.version = '1.0.0'
+    s.version = '1.0.1'
     s.summary = 'A simple custom picker dialog'
 
     s.description  = 'A simple custom picker dialogS'
