@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
     s.version = '1.0.0'
     s.summary = 'A simple custom picker dialog'
 
-    s.description  = 'A simple custom picker dialog. Works on iOS 8.1'
+    s.description  = 'A simple custom picker dialogS'
 
     s.license = 'MIT'
 
