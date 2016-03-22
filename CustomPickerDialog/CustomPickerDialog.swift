@@ -104,7 +104,7 @@ class CustomPickerDialog: UIView {
         self.cancelButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), forState: UIControlState.Highlighted)
         self.cancelButton.titleLabel!.font = UIFont.boldSystemFontOfSize(14)
         self.cancelButton.layer.cornerRadius = 7
-        self.cancelButton.addTarget(self, action: "clickButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         dialogContainer.addSubview(self.cancelButton)
         
         self.doneButton = UIButton(type: UIButtonType.Custom) as UIButton
@@ -114,7 +114,7 @@ class CustomPickerDialog: UIView {
         self.doneButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), forState: UIControlState.Highlighted)
         self.doneButton.titleLabel!.font = UIFont.boldSystemFontOfSize(14)
         self.doneButton.layer.cornerRadius = 7
-        self.doneButton.addTarget(self, action: "clickButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.doneButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         dialogContainer.addSubview(self.doneButton)
         
         self.doneButton.setTitle("OK", forState: .Normal)
