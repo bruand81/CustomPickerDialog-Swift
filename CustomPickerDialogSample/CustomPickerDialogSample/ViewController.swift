@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func clickShowDialog(sender: AnyObject) {
+    @IBAction func clickShowDialog(_ sender: AnyObject) {
         
         let pickerView = CustomPickerDialog.init()
         
