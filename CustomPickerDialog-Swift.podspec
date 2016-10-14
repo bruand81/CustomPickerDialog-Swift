@@ -18,7 +18,5 @@ Pod::Spec.new do |s|
 
     s.source_files = 'CustomPickerDialog/CustomPickerDialog.swift'
     
-    s.requires_arc = true
-    
 end
 
