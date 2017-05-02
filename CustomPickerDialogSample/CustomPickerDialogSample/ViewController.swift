@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        lblResult.text = "val5"
+        lblResult.text = "val4"
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -27,16 +27,15 @@ class ViewController: UIViewController {
 
     @IBAction func clickShowDialog(_ sender: AnyObject) {
         
-        let pickerView = CustomPickerDialog.init()
-        
-        let arrayDataSource = ["val1", "val2", "val3", "val4", "val5", "val6", "val7","val8","val9","val10"]
-        
-        pickerView.setDataSource(arrayDataSource)
-        pickerView.selectValue(lblResult.text!)
+        let pickerView = CustomPickerDialog(dataSource: [1,2,3,4,5,6]) { (data) -> String in
+            return "val\(String(data))"
+        }
+
+        pickerView.selectRow(3)
         
         pickerView.showDialog("CustomPickerDialog", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
             
-            self.lblResult.text = result
+            self.lblResult.text = "val\(String(result))"
             
         }
     }

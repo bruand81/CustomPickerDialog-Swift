@@ -6,9 +6,10 @@
 
 import UIKit
 
-class CustomPickerDialog: UIView {
+class CustomPickerDialog<T>: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    typealias CustomPickerCallback = (_ result: String) -> Void
+    typealias CustomPickerCallback = (_ result: T) -> Void
+    typealias CustomDataSourceFormat = (T) -> String
     
     // constants
     fileprivate let componentNum: Int = 1
@@ -27,10 +28,11 @@ class CustomPickerDialog: UIView {
     
     // callback
     fileprivate var callback: CustomPickerCallback?
+    fileprivate var dataSourceFormat: CustomDataSourceFormat?
     
     // data
-    fileprivate var dataSelcted: String?
-    fileprivate var dataSource = [String]()
+    fileprivate var dataSelcted: T?
+    fileprivate var dataSource: [T]?
     
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
@@ -38,11 +40,12 @@ class CustomPickerDialog: UIView {
         initView()
     }
     
-    init(dataSource: [String]) {
+    init(dataSource: [T], dataSourceFormat: @escaping CustomDataSourceFormat) {
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
         
         initView()
         setDataSource(dataSource)
+        self.dataSourceFormat = dataSourceFormat
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -124,35 +127,18 @@ class CustomPickerDialog: UIView {
     }
     
     // MARK: public func
-    func setDataSource(_ source: [String]) {
+    func setDataSource(_ source: [T]) {
         
         self.dataSource = source
         
-        dataSelcted = self.dataSource[0]
+        self.dataSelcted = self.dataSource?.first
     }
     
     func selectRow(_ row: Int) {
 
-        self.dataSelcted = self.dataSource[row]
+        self.dataSelcted = self.dataSource?[row]
         
         self.pickerView.selectRow(row, inComponent: 0, animated: true)
-    }
-    
-    func selectValue(_ value: String) {
-        
-        var index: Int = 0
-        
-        for i in 0...self.dataSource.count-1 {
-            let val = self.dataSource[i]
-            
-            if(val == value) {
-                self.dataSelcted = val
-                index = i
-                break;
-            }
-        }
-        
-        self.pickerView.selectRow(index, inComponent: 0, animated: true)
     }
     
     func showDialog(_ title: String, doneButtonTitle: String = "OK", cancelButtonTitle: String = "Cancel", callback: @escaping CustomPickerCallback) {
@@ -209,26 +195,35 @@ class CustomPickerDialog: UIView {
         
         close()
     }
-}
-
-extension CustomPickerDialog: UIPickerViewDataSource, UIPickerViewDelegate {
     
+    // UIPickerView Delegate
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
         return componentNum
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.dataSource.count
+     
+        if let count = self.dataSource?.count {
+            
+            return count
+        }
+        
+        return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        return self.dataSource[row]
+        if let data = self.dataSource?[row], let dataFormat = dataSourceFormat {
+            
+            return dataFormat(data)
+        }
+        
+        return nil
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        dataSelcted = self.dataSource[row]
+        self.selectRow(row)
     }
 }
