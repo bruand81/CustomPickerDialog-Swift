@@ -23,13 +23,15 @@ import CustomPickerDialog_Swift
 # Usage
 
 ```swift
-let pickerView = CustomPickerDialog()
+let pickerView = CustomPickerDialog(dataSource: [1,2,3,4,5,6]) { (data) -> String in
+    return "val\(String(data))"
+}
 
-let arrayDataSource = ["val1", "val2", "val3", "val4", "val5", "val6", "val7", "val8", "val9", "val10"]
-
-pickerView.setDataSource(arrayDataSource)
-
+pickerView.selectRow(3)
+        
 pickerView.showDialog("CustomPickerDialog", doneButtonTitle: "done", cancelButtonTitle: "cancel") { (result) -> Void in
-    print(result)
+                    
+    self.lblResult.text = "val\(String(result))"
+                                
 }
 ```
