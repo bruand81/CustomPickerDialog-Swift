@@ -101,27 +101,27 @@ class CustomPickerDialog<T>: UIView, UIPickerViewDataSource, UIPickerViewDelegat
         // Button
         let buttonWidth = dialogContainer.bounds.size.width / 2
         
-        self.cancelButton = UIButton(type: UIButtonType.custom) as UIButton
+        self.cancelButton = UIButton(type: UIButton.ButtonType.custom) as UIButton
         self.cancelButton.frame = CGRect(x: 0, y: dialogContainer.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
-        self.cancelButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), for: UIControlState())
-        self.cancelButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: UIControlState.highlighted)
+        self.cancelButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), for: UIControl.State())
+        self.cancelButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: UIControl.State.highlighted)
         self.cancelButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 14)
         self.cancelButton.layer.cornerRadius = 7
-        self.cancelButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), for: UIControlEvents.touchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), for: UIControl.Event.touchUpInside)
         dialogContainer.addSubview(self.cancelButton)
         
-        self.doneButton = UIButton(type: UIButtonType.custom) as UIButton
+        self.doneButton = UIButton(type: UIButton.ButtonType.custom) as UIButton
         self.doneButton.tag = doneButtonTag
         self.doneButton.frame = CGRect(x: buttonWidth, y: dialogContainer.bounds.size.height - buttonHeight, width: buttonWidth, height: buttonHeight)
-        self.doneButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), for: UIControlState())
-        self.doneButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: UIControlState.highlighted)
+        self.doneButton.setTitleColor(UIColor(red: 0, green: 0.5, blue: 1, alpha: 1), for: UIControl.State())
+        self.doneButton.setTitleColor(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5), for: UIControl.State.highlighted)
         self.doneButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 14)
         self.doneButton.layer.cornerRadius = 7
-        self.doneButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), for: UIControlEvents.touchUpInside)
+        self.doneButton.addTarget(self, action: #selector(CustomPickerDialog.clickButton(_:)), for: UIControl.Event.touchUpInside)
         dialogContainer.addSubview(self.doneButton)
         
-        self.doneButton.setTitle("OK", for: UIControlState())
-        self.cancelButton.setTitle("Cancel", for: UIControlState())
+        self.doneButton.setTitle("OK", for: UIControl.State())
+        self.cancelButton.setTitle("Cancel", for: UIControl.State())
 
         return dialogContainer
     }
@@ -144,8 +144,8 @@ class CustomPickerDialog<T>: UIView, UIPickerViewDataSource, UIPickerViewDelegat
     func showDialog(_ title: String, doneButtonTitle: String = "OK", cancelButtonTitle: String = "Cancel", callback: @escaping CustomPickerCallback) {
         
         self.titleLabel.text = title
-        self.doneButton.setTitle(doneButtonTitle, for: UIControlState())
-        self.cancelButton.setTitle(cancelButtonTitle, for: UIControlState())
+        self.doneButton.setTitle(doneButtonTitle, for: UIControl.State())
+        self.cancelButton.setTitle(cancelButtonTitle, for: UIControl.State())
         self.callback = callback
         
         UIApplication.shared.windows.first!.addSubview(self)
@@ -159,7 +159,7 @@ class CustomPickerDialog<T>: UIView, UIPickerViewDataSource, UIPickerViewDelegat
         UIView.animate(
             withDuration: 0.2,
             delay: 0,
-            options: UIViewAnimationOptions(),
+            options: UIView.AnimationOptions(),
             animations: { () -> Void in
                 self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
                 self.dialogView!.layer.opacity = 1
@@ -175,7 +175,7 @@ class CustomPickerDialog<T>: UIView, UIPickerViewDataSource, UIPickerViewDelegat
         UIView.animate(
             withDuration: 0.2,
             delay: 0,
-            options: UIViewAnimationOptions(),
+            options: UIView.AnimationOptions(),
             animations: { () -> Void in
                 self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
                 self.dialogView!.layer.opacity = 0.1
@@ -187,7 +187,7 @@ class CustomPickerDialog<T>: UIView, UIPickerViewDataSource, UIPickerViewDelegat
     }
     
     // MARK: Button Event
-    func clickButton(_ sender: UIButton!) {
+    @objc func clickButton(_ sender: UIButton!) {
         if sender.tag == doneButtonTag {
             
             self.callback?(dataSelcted!)
